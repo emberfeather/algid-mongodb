@@ -9,6 +9,10 @@
 		]
 	},
 	"key": "mongodb",
+	"mongoDB": {
+		"serverName": "localhost",
+		"port": "27017"
+	},
 	"prerequisites": {
 	},
 	"requestSingletons": {
