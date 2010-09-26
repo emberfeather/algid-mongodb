@@ -12,7 +12,7 @@ component extends="algid.inc.resource.base.model" {
 		
 		// Remove any blanks so they don't appear in the db
 		for( key in result ) {
-			if(result[key] == '') {
+			if(isSimpleValue(result[key]) && result[key] == '') {
 				structDelete(result, key);
 			}
 		}
