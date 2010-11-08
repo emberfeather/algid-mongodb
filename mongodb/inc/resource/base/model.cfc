@@ -1,4 +1,5 @@
-component extends="algid.inc.resource.base.model" {
+<cfcomponent extends="algid.inc.resource.base.model" output="false">
+<cfscript>
 	public struct function get__instance() {
 		var result = super.get__instance();
 		var key = '';
@@ -19,4 +20,61 @@ component extends="algid.inc.resource.base.model" {
 		
 		return result;
 	}
-}
+</cfscript>
+	
+	<cffunction name="onMissingMethod" access="public" returntype="any" output="false">
+		<cfargument name="missingMethodName" type="string" required="true" />
+		<cfargument name="missingMethodArguments" type="struct" required="true" />
+		
+		<cfset var attribute = '' />
+		<cfset var attributeSet = '' />
+		<cfset var attributeValue = '' />
+		<cfset var bundle = '' />
+		<cfset var childAttribute = '' />
+		<cfset var format = '' />
+		<cfset var i = '' />
+		<cfset var isUnique = '' />
+		<cfset var j = '' />
+		<cfset var prefix = '' />
+		<cfset var result = '' />
+		
+		<!--- Do a regex on the name --->
+		<cfset result = reFindNoCase('^(get)(.+)', arguments.missingMethodName, 1, true) />
+		
+		<!--- If we find don't find anything --->
+		<cfif not result.pos[1]>
+			<cfreturn super.onMissingMethod(argumentCollection = arguments) />
+		</cfif>
+		
+		<!--- Find the prefix --->
+		<cfset prefix = mid(arguments.missingMethodName, result.pos[2], result.len[2]) />
+		
+		<!--- Find the attribute --->
+		<cfset attribute = mid(arguments.missingMethodName, result.pos[3], result.len[3]) />
+		
+		<!--- Do the fun stuff --->
+		<cfswitch expression="#prefix#">
+			<cfcase value="get">
+				<cfset result = reFindNoCase('(.+)By(.*)', attribute, 1, true) />
+				
+				<!--- Check if it is a simple get or a search --->
+				<cfif not result.pos[1]>
+					<cfif left(attribute, 2) EQ '__'>
+						<cfreturn super.onMissingMethod(argumentCollection = arguments) />
+					</cfif>
+					
+					<!--- Simple get --->
+					<cfif structKeyExists(variables.instance, attribute)>
+						<cfreturn variables.instance[attribute] />
+					<cfelseif arrayLen(arguments.missingMethodArguments)>
+						<cfreturn arguments.missingMethodArguments[1] />
+					</cfif>
+					
+					<cfreturn '' />
+				<cfelse>
+					<cfreturn super.onMissingMethod(argumentCollection = arguments) />
+				</cfif>
+			</cfcase>
+		</cfswitch>
+	</cffunction>
+</cfcomponent>
