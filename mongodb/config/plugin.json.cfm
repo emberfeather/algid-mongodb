@@ -9,6 +9,7 @@
 		]
 	},
 	"key": "mongodb",
+	"plugin": "MongoDB",
 	"mongoDB": {
 		"serverName": "localhost",
 		"port": "27017"
