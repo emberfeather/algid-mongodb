@@ -1,6 +1,8 @@
 {
-	"releaseNotes": "http://github.com/emberfeather/algid-mongodb/wiki/Release-Notes",
 	"archive": "http://github.com/emberfeather/algid-mongodb/tarball/0.1.0",
+	"key": "mongodb",
+	"releaseNotes": "http://github.com/emberfeather/algid-mongodb/wiki/Release-Notes",
+	"title": "MongoDB",
 	"URL": "http://github.com/emberfeather/algid-mongodb",
 	"version": "0.1.0"
 }
