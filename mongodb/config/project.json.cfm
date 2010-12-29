@@ -15,6 +15,7 @@
 		"port": "27017"
 	},
 	"prerequisites": {
+		"algid": "0.1.3"
 	},
 	"requestSingletons": {
 	},
