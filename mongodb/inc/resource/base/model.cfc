@@ -30,7 +30,7 @@
 		<cfset var attributeSet = '' />
 		<cfset var attributeValue = '' />
 		<cfset var bundle = '' />
-		<cfset var childAttribute = '' />
+		<cfset var internalAttribute = '' />
 		<cfset var format = '' />
 		<cfset var i = '' />
 		<cfset var isUnique = '' />
@@ -39,7 +39,7 @@
 		<cfset var result = '' />
 		
 		<!--- Do a regex on the name --->
-		<cfset result = reFindNoCase('^(get)(.+)', arguments.missingMethodName, 1, true) />
+		<cfset result = reFindNoCase('^(get|set)(.+)', arguments.missingMethodName, 1, true) />
 		
 		<!--- If we find don't find anything --->
 		<cfif not result.pos[1]>
@@ -74,6 +74,20 @@
 				<cfelse>
 					<cfreturn super.onMissingMethod(argumentCollection = arguments) />
 				</cfif>
+			</cfcase>
+			<cfcase value="set">
+				<!--- If there is a complex attribute then extend the default so nothing is lost --->
+				<cfif has__attribute(attribute)>
+					<cfset internalAttribute = get__attribute(attribute) />
+					
+					<cfif structKeyExists(internalAttribute, 'defaultValue')
+						and isStruct(internalAttribute.defaultValue)
+						and isStruct(arguments.missingMethodArguments[1])>
+						<cfset arguments.missingMethodArguments[1] = extend(internalAttribute.defaultValue, arguments.missingMethodArguments[1]) />
+					</cfif>
+				</cfif>
+				
+				<cfset super.onMissingMethod(argumentCollection = arguments) />
 			</cfcase>
 		</cfswitch>
 	</cffunction>
