@@ -2,6 +2,8 @@
 	"applicationSingletons": {
 	},
 	"applicationTransients": {
+		"mongoForMongodb": "mongo4cf.mongo",
+		"utilityForMongodb": "mongo4cf.utility"
 	},
 	"i18n": {
 		"locales": [
@@ -25,5 +27,5 @@
 	},
 	"sessionTransients": {
 	},
-	"version": "0.1.1"
+	"version": "0.1.2"
 }
