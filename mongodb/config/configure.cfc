@@ -2,7 +2,7 @@ component extends="algid.inc.resource.plugin.configure" {
 	public void function onApplicationStart(required struct theApplication) {
 		var plugin = '';
 		var port = 27017;
-		var serverName = 'localhost';
+		var serverName = '127.0.0.1';
 		var settings = '';
 		
 		plugin = arguments.theApplication.managers.plugin.getMongoDB();
