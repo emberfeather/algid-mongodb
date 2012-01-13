@@ -22,4 +22,9 @@ component extends="algid.inc.resource.plugin.configure" {
 		local.mongoUtility = arguments.theApplication.factories.transient.getUtilityForMongoDB();
 		arguments.theApplication.managers.singleton.setMongoUtility(local.mongoUtility);
 	}
+	
+	public void function onApplicationEnd(required struct applicationScope) {
+		// Close the mongo connections
+		arguments.applicationScope.managers.singleton.getMongo().close();
+	}
 }
