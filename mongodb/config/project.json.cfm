@@ -13,7 +13,7 @@
 	"key": "mongodb",
 	"plugin": "MongoDB",
 	"mongoDB": {
-		"serverName": "localhost",
+		"serverName": "127.0.0.1",
 		"port": "27017"
 	},
 	"prerequisites": {
